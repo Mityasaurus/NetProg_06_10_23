@@ -11,7 +11,8 @@ namespace RickAndMorty_API_CORE.Data.API
     {
         private string BaseUri = "https://rickandmortyapi.com/api/";
         private HttpClient client { set; get; }
-        public RAM_API_ENGINE() {
+        public RAM_API_ENGINE()
+        {
             client = new HttpClient();
             client.BaseAddress = new Uri(BaseUri);
         }
@@ -41,7 +42,5 @@ namespace RickAndMorty_API_CORE.Data.API
         {
             throw new NotImplementedException();
         }
-
-       
     }
 }
