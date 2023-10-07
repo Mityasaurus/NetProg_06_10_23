@@ -28,17 +28,21 @@ namespace RickAndMorty_API_CORE.Data.API
             var content = response.Result.Content.ReadAsStringAsync();
             return content.Result.ToString();
         }
-        void IAPI.GetCharacter(int id)
+
+        public string GetCharacter(int id)
+        {
+            var responce = client.SendAsync(new HttpRequestMessage(HttpMethod.Get, BaseUri + "character/" + id));
+
+            var content = responce.Result.Content.ReadAsStringAsync();
+            return content.Result.ToString();
+        }
+
+        public void GetLocation(int id)
         {
             throw new NotImplementedException();
         }
 
-        void IAPI.GetEpisode(int id)
-        {
-            throw new NotImplementedException();
-        }
-
-        void IAPI.GetLocation(int id)
+        public void GetEpisode(int id)
         {
             throw new NotImplementedException();
         }

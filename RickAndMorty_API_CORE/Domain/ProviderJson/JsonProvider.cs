@@ -17,6 +17,9 @@ namespace RickAndMorty_API_CORE.Domain.ProviderJson
             IList<JToken> results = keyValuePairs["results"].Children().ToList();
             foreach (JToken token in results)
             {
+
+                //Character character = token.ToObject<Character>();
+
                 //int c = 0;
                 //foreach (var child in token.Children())
                 //{
