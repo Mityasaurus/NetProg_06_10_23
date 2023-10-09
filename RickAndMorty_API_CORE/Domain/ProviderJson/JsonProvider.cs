@@ -15,35 +15,48 @@ namespace RickAndMorty_API_CORE.Domain.ProviderJson
             List<Character> characters = new List<Character>();
             JObject keyValuePairs = JObject.Parse(json);
             IList<JToken> results = keyValuePairs["results"].Children().ToList();
-            List<string> class_params = new List<string>();
             foreach (JToken token in results)
             {
-                int c = 0;
-                foreach (var child in token.Children())
-                {
-                    if(c == 7)
-                    {
-                        string s = child.First.First.Last.ToString();
-                        class_params.Add(s);
-                    }
-                    else
-                    {
-                        class_params.Add(child.Last.ToString());
-                    }
-                    c++;
-                }
+
+                //Character character = token.ToObject<Character>();
+
+                //int c = 0;
+                //foreach (var child in token.Children())
+                //{
+                //    if(c == 7)
+                //    {
+                //        string s = child.First.First.Last.ToString();
+                //        class_params.Add(s);
+                //    }
+                //    else
+                //    {
+                //        class_params.Add(child.Last.ToString());
+                //    }
+                //    c++;
+                //}
                 Character item = new Character();
-                item.Id = class_params[0];
-                item.Name = class_params[1];
-                item.Status = class_params[2];
-                item.Species = class_params[3];
-                item.Gender = class_params[5];
-                item.Location = class_params[7];
-                item.ImageURL = class_params[8];
+
+                item.Id = token["id"].ToString();
+                item.Name = token["name"].ToString();
+                item.Status = token["status"].ToString();
+                item.Species = token["species"].ToString();
+                item.Gender = token["gender"].ToString();
+                item.Location = token["location"]["name"].ToString();
+                item.ImageURL = token["image"].ToString();
+
                 characters.Add(item);
-                class_params.Clear();
             }
             return characters;
+        }
+
+        public static int GetPagesMaxNumberFromJson(string json)
+        {
+            int result = 0;
+            JObject keyValuePairs = JObject.Parse(json);
+            var results = keyValuePairs["info"]["pages"].ToString();
+
+            result = int.Parse(results);
+            return result;
         }
     }
 }

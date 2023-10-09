@@ -1,4 +1,7 @@
-﻿using System;
+﻿using RickAndMorty_API_CORE.Data.API;
+using RickAndMorty_API_CORE.Domain.Models;
+using RickAndMorty_API_CORE.Domain.ProviderJson;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -23,6 +26,7 @@ namespace RickAndMorty_UI
         public MainWindow()
         {
             InitializeComponent();
-        }
+            mainFrame.Content = new MainPage();
+        }          
     }
 }
