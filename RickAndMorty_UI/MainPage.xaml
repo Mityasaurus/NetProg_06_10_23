@@ -33,5 +33,9 @@
                 </DataTemplate>
             </ListView.ItemTemplate>
         </ListView>
+        <TextBlock Text="Name:" FontSize="18" VerticalAlignment="Center" Margin="240 0 780 0"></TextBlock>
+        <TextBox x:Name="tb_Name" FontSize="18" VerticalAlignment="Center" Margin="310 0 580 0" TextChanged="tb_Name_TextChanged"></TextBox>
+        <TextBlock Text="Location:" FontSize="18" VerticalAlignment="Center" Margin="520 0 480 0"></TextBlock>
+        <TextBox x:Name="tb_Location" FontSize="18" VerticalAlignment="Center" Margin="620 0 270 0" TextChanged="tb_Name_TextChanged"></TextBox>
     </Grid>
 </Page>

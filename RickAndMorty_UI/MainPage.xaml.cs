@@ -42,6 +42,12 @@ namespace RickAndMorty_UI
             listViewMain.ItemsSource = characters;
         }
 
+        private void UpdateDataSource(List<Character> newCharacters)
+        {
+            listViewMain.ItemsSource = null;
+            listViewMain.ItemsSource = newCharacters;
+        }
+
         private void Page_Loaded(object sender, RoutedEventArgs e)
         {
             if (IsFirstLoad)
@@ -49,7 +55,8 @@ namespace RickAndMorty_UI
                 engine = new RAM_API_ENGINE();
 
                 string page = engine.GetPage(currentPageNumber);
-                listViewMain.ItemsSource = JsonProvider.FromJsonToCharacterList(page);
+                characters = JsonProvider.FromJsonToCharacterList(page);
+                listViewMain.ItemsSource = characters;
                 maxPages = JsonProvider.GetPagesMaxNumberFromJson(page);
 
                 IsFirstLoad = false;
@@ -71,6 +78,8 @@ namespace RickAndMorty_UI
                 {
                     btnPrev.Visibility = Visibility.Hidden;
                 }
+
+                UpdateBySearchBars();
             }
         }
 
@@ -85,6 +94,8 @@ namespace RickAndMorty_UI
                 {
                     btnNext.Visibility = Visibility.Hidden;
                 }
+
+                UpdateBySearchBars();
             }
         }
 
@@ -97,6 +108,43 @@ namespace RickAndMorty_UI
                 CharacterInfoPage characterPage = new CharacterInfoPage(selectedCharacter, this);
 
                 NavigationService.Navigate(characterPage);
+            }
+        }
+
+        private void tb_Name_TextChanged(object sender, TextChangedEventArgs e)
+        {
+            UpdateBySearchBars();
+        }
+
+        private void UpdateBySearchBars()
+        {
+            string name = tb_Name.Text.ToLower();
+            string location = tb_Location.Text.ToLower();
+
+            if(string.IsNullOrWhiteSpace(name) && string.IsNullOrWhiteSpace(location))
+            {
+                UpdateDataSource(characters);
+                return;
+            }
+
+            if(string.IsNullOrWhiteSpace(location))
+            {
+                var newCharacters = characters.Where(c => c.Name.ToLower().Contains(name)).ToList();
+
+                UpdateDataSource(newCharacters);
+            }
+            else if(string.IsNullOrWhiteSpace(name))
+            {
+                var newCharacters = characters.Where(c => c.Location.ToLower().Contains(location)).ToList();
+
+                UpdateDataSource(newCharacters);
+            }
+            else
+            {
+                var newCharacters = characters.Where(c => c.Name.ToLower().Contains(name) 
+                                                  && c.Location.ToLower().Contains(location)).ToList();
+
+                UpdateDataSource(newCharacters);
             }
         }
     }
